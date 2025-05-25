@@ -105,13 +105,13 @@ async def about(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if lang == "ar":
         msg = (
             "🤖 <b>أنا SmartyBot</b>، مساعدك الذكي لتحليل البيانات باستخدام بايثون!\n"
-            "💡 أستطيع شرح المكتبات، تنفيذ تحليل بيانات، توليد تقارير، التحدث بلغتين.\n"
+            "💡 أستطيع شرح تحليل البيانات، تنفيذ تحليل بيانات، توليد تقارير، التحدث بلغتين.\n"
             "✨ صُنع بإتقان بواسطة <b>محمد طارق</b>."
         )
     else:
         msg = (
             "🤖 <b>I'm SmartyBot</b>, your smart assistant for data analysis using Python!\n"
-            "💡 I can explain libraries, run data analysis, generate reports, and speak both languages.\n"
+            "💡 I can explain Data Analysis, run data analysis, generate reports, and speak both languages.\n"
             "✨ Created with care by <b>Mohammed Tarig</b>."
         )
 
