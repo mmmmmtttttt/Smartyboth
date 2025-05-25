@@ -6,3 +6,11 @@ seaborn
 reportlab
 python-dotenv
 tabulate
+telegram
+json
+os
+re
+string
+datetime
+random
+tempfile
