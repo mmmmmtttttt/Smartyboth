@@ -83,5 +83,11 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
 
     # ❓ حالة غير معروفة
-    await update.message.reply_text("I'm here to help, try /help 📋" if lang == "en" else "أنا هنا للمساعدة، جرب تكتب /help 📋")
-    log_unknown_command(update.effective_user.id, update.effective_user.username, user_text)  # type: ignore
+    await update.message.reply_text(
+        "I'm here to help, try /help 📋" if lang == "en" else "أنا هنا للمساعدة، جرب تكتب /help 📋"
+    )
+    log_unknown_command(
+        update.effective_user.id,
+        update.effective_user.username, # type: ignore
+        user_text
+    )
