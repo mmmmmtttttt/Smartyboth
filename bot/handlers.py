@@ -1,6 +1,6 @@
 from telegram.ext import CommandHandler, MessageHandler, filters
 from .responses import handle_message
-from .commands import start, help, time_, date_, password_command, set_language, about
+from .commands import start, help, time_, date_, password_command, set_language, about, data_analysis
 from .file_receiver import handle_document
 from .files import handle_file
 from telegram.ext import CallbackQueryHandler
@@ -20,6 +20,7 @@ def setup_handlers(app):
     app.add_handler(CommandHandler("set_lang", set_language))
     app.add_handler(CallbackQueryHandler(handle_language_callback, pattern="^set_lang_"))
     app.add_handler(CommandHandler("about", about))
+    app.add_handler(CommandHandler("data_analysis", data_analysis))
     app.add_handler(CallbackQueryHandler(handle_callback))
 
 
