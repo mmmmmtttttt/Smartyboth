@@ -54,8 +54,11 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     elif intent == "example":
         await handle_example_request(context, lang, update)
         return
-
-
+        
+    elif intent == "status":
+        await update.message.reply_text(get_reply_by_intent("status", lang))
+        return
+        
     elif intent == "knowledge":
         # 📘 الرد من قاعدة المعرفة
         answer = get_structured_response(user_text, user_lang=lang, context=context)
