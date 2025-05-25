@@ -32,6 +32,7 @@ async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
 <code>/about</code> — من أنا؟  
 <code>/pass</code> — توليد كلمة مرور آمنة  
 <code>/set_lang</code> — تغيير اللغة: العربية / English
+<code>/data_analysis - تحليل البيانات
 
 ✨ <i>يمكنك أيضًا سؤالي عن تحليل البيانات باستخدام بايثون!</i>
 '''
@@ -46,10 +47,10 @@ async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
 <code>/about</code> — Who am I?  
 <code>/pass</code> — Generate a strong password  
 <code>/set_lang</code> — Change language: English / العربية
+<code>/data_analysis - Data Analysis
 
 ✨ <i>You can also ask me about data analysis using Python!</i>
 '''
-
     await update.message.reply_text(msg, parse_mode="HTML")
 
 # دالة لعرض الزمن الحالي
@@ -113,6 +114,43 @@ async def about(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "🤖 <b>I'm SmartyBot</b>, your smart assistant for data analysis using Python!\n"
             "💡 I can explain Data Analysis, run data analysis, generate reports, and speak both languages.\n"
             "✨ Created with care by <b>Mohammed Tarig</b>."
+        )
+
+    await update.message.reply_text(msg, parse_mode="HTML")
+
+async def data_analysis(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if update.message is None:
+        return
+
+    lang = context.user_data.get("lang", "ar") # type: ignore
+
+    if lang == "ar":
+        msg = (
+            "🤖 <b>تحليل البيانات</b>، يتم تحليل البيانات باستخدام بايثون\n"
+            "🧰 <b>الادوات المستخدم:</b>\n"
+            "🐍 <code>Python => لغة البرمجة" \
+            "🔢 <code>Numpy => مكتبة تساعد في ترتيب المصفوفات"
+            "🧼 <code>Pandas => مكتبة تساعد في تنظيف و تحليل البيانات"
+            "📊 <code>Matplotlib => مكتبة للرسم البياني"
+            "📈 <code>Seaborn => مكتبة للرسم البياني الحديث"
+
+            "📤 <b>يمكنك رفع الملف الان مباشرة لتحليله</b>"
+            "ℹ️ <i>ملحوظة: يتم تحليل الملفات الاتية فقط:</i>"
+            "📁 <code>CSV | EXCEL | JSON"
+        )
+    else:
+        msg = (
+            "🤖 <b>Data Analysis</b> is performed using Python\n"
+            "🧰 <b>Tools used:</b>\n"
+            "🐍 <code>Python</code> => Programming language\n"
+            "🔢 <code>Numpy</code> => Library for working with arrays\n"
+            "🧼 <code>Pandas</code> => Library for cleaning and analyzing data\n"
+            "📊 <code>Matplotlib</code> => Library for data visualization\n"
+            "📈 <code>Seaborn</code> => Modern statistical visualization library\n\n"
+
+            "📤 <b>You can now upload your file for analysis</b>\n"
+            "ℹ️ <i>Note: Only the following file types are supported:</i>\n"
+            "📁 <code>CSV | EXCEL | JSON</code>"
         )
 
     await update.message.reply_text(msg, parse_mode="HTML")
