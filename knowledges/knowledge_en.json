@@ -5,29 +5,14 @@
     },
     "pandas": {
         "description": "<code>pandas</code> is a Python library used for data analysis.\nIt allows you to work with tables and data in <code>DataFrame</code> format efficiently.",
-        "functions": ["read", "head", "tail", "describe", "info", "value_counts"],
-        "example": "import pandas as pd\ndf = pd.read_csv('data.csv')\ndf.head()"
+        "functions": ["read", "head", "tail", "describe", "info", "value_counts", "isnull", "dropna", "fillna", "groupby", "sort_values", "loc", "iloc", "apply", "drop"]
     },
-    "numpy": {
-        "description": "<code>numpy</code> is a library for numerical operations and arrays.\nIt is a core part of digital data processing in Python.",
-        "functions": ["array", "mean", "median", "std", "reshape"],
-        "example": "import numpy as np\narr = np.array([1, 2, 3])\nprint(np.mean(arr))"
-    },
-    "matplotlib": {
-        "description": "<code>matplotlib</code> is a library used to create data visualizations.\nIt helps you draw charts such as bars, lines, and points.",
-        "functions": ["plot", "bar", "hist", "scatter", "show"]
-    },
-    "seaborn": {
-        "description": "<code>seaborn</code> is built on top of <code>matplotlib</code>.\nIt is used to create beautiful and advanced statistical plots easily.",
-        "functions": ["heatmap", "boxplot", "countplot", "pairplot"],
-        "example": "import seaborn as sns\nimport pandas as pd\ndf = sns.load_dataset('iris')\nsns.pairplot(df)"
-    },
-    "read": {
+        "read": {
         "description": "Read functions in <code>pandas</code> are used to load data from various sources.\nAfter loading, the data is stored in a structure called <code>DataFrame</code> for analysis.",
-        "example": "import pandas as pd\n\n# CSV\ndf1 = pd.read_csv('data.csv')\n\n# Excel\ndf2 = pd.read_excel('data.xlsx')\n\n# JSON\ndf3 = pd.read_json('data.json')\n\n# Google Sheets\nsheet_url = 'https://docs.google.com/spreadsheets/d/1abc123xyz/export?format=csv'\ndf4 = pd.read_csv(sheet_url)\n\n# From URL\nurl = 'https://example.com/data.csv'\ndf5 = pd.read_csv(url)"
+        "example": "import pandas as pd\n\n# CSV\ndf1 = pd.read_csv('data.csv')\n\n# Excel\ndf2 = pd.read_excel('data.xlsx')\n\n# JSON\ndf3 = pd.read_json('data.json')\n\n# Google Sheets\nsheet_url = 'https://docs.google.com/spreadsheets/d/1abc123xyz/export?format=csv'\ndf4 = pd.read_csv(sheet_url)\n\n# From the internet\nurl = 'https://example.com/data.csv'\ndf5 = pd.read_csv(url)"
     },
     "head": {
-        "description": "Displays the first 5 rows of the dataset by default.\nUseful for inspecting the beginning of your data.",
+        "description": "Displays the first 5 rows of the dataset by default.\nUsed to preview the beginning of the data.",
         "example": "df.head()"
     },
     "tail": {
@@ -35,15 +20,119 @@
         "example": "df.tail()"
     },
     "describe": {
-        "description": "Displays a statistical summary of numeric columns.\nIncludes mean, standard deviation, max, and min values.",
+        "description": "Used to display statistical summary of numeric columns.\nIncludes mean, standard deviation, min, and max values.",
         "example": "df.describe()"
     },
     "info": {
-        "description": "Shows general information about the <code>DataFrame</code>.\nIncludes column names, data types, and non-null counts.",
+        "description": "Displays general information about the <code>DataFrame</code>.\nIncludes column names, data types, and non-null value counts.",
         "example": "df.info()"
     },
     "value_counts": {
-        "description": "Counts the occurrences of each unique value in a specific column.\nUseful for analyzing categorical data distribution.",
+        "description": "Counts the number of occurrences of each unique value in a specified column.\nIdeal for analyzing categorical distribution.",
         "example": "df['col'].value_counts()"
+    },
+    "isnull": {
+        "description": "Used to detect missing values in a DataFrame or Series.\nReturns a Boolean mask indicating the missing positions.",
+        "example": "df.isnull()"
+    },
+    "dropna": {
+        "description": "Used to drop rows or columns containing missing values.\nYou can specify axis, threshold, and more.",
+        "example": "df.dropna()"
+    },
+    "fillna": {
+        "description": "Used to fill missing values with a specified value or strategy.\nSuch as a constant, mean, or forward fill.",
+        "example": "df.fillna(0)"
+    },
+    "groupby": {
+        "description": "Used to group data based on one or more columns, then apply aggregation functions.\nIdeal for grouped analysis.",
+        "example": "df.groupby('category').mean()"
+    },
+    "sort_values": {
+        "description": "Used to sort the data ascending or descending by a specific column.",
+        "example": "df.sort_values(by='age')"
+    },
+    "loc": {
+        "description": "Used to access rows or columns by label (label-based indexing).",
+        "example": "df.loc[0, 'name']"
+    },
+    "iloc": {
+        "description": "Used to access rows or columns by numerical index (index-based).",
+        "example": "df.iloc[0, 1]"
+    },
+    "apply": {
+        "description": "Used to apply a custom function to each row or column.\nUseful for data transformations or operations.",
+        "example": "df['col'].apply(lambda x: x * 2)"
+    },
+    "drop": {
+        "description": "Used to drop columns or rows from a DataFrame.\nYou can specify the axis and labels to drop.",
+        "example": "df.drop('column_name', axis=1)"
+    },
+    "numpy": {
+        "description": "<code>numpy</code> is a Python library for numerical operations and arrays.\nIt is a powerful foundation for digital processing in Python.",
+        "functions": ["array", "mean", "median", "std", "reshape"]
+    },
+    "array": {
+        "description": "Used to create an array from a list or set of data.\nArrays are the core data structure in NumPy.",
+        "example": "import numpy as np\narr = np.array([1, 2, 3, 4])"
+    },
+    "mean": {
+        "description": "Calculates the average (mean) of array values.",
+        "example": "np.mean(arr)"
+    },
+    "median": {
+        "description": "Calculates the median value of the array.",
+        "example": "np.median(arr)"
+    },
+    "std": {
+        "description": "Calculates the standard deviation of array values.",
+        "example": "np.std(arr)"
+    },
+    "reshape": {
+        "description": "Used to reshape the array without changing its data.",
+        "example": "arr.reshape(2, 2)"
+    },
+    "matplotlib": {
+        "description": "<code>matplotlib</code> is a library used to create visual plots.\nIt allows you to draw charts like bars, lines, scatter plots, and more.",
+        "functions": ["plot", "bar", "hist", "scatter", "show"]
+    },
+    "plot": {
+        "description": "Used to draw a simple line plot.\nCommonly used to compare values over time or order.",
+        "example": "import matplotlib.pyplot as plt\nplt.plot([1, 2, 3], [4, 5, 6])\nplt.show()"
+    },
+    "bar": {
+        "description": "Used to draw a bar chart for comparing categories.",
+        "example": "plt.bar(['A', 'B', 'C'], [10, 20, 15])\nplt.show()"
+    },
+    "hist": {
+        "description": "Used to draw a histogram (frequency distribution).",
+        "example": "plt.hist([1, 2, 2, 3, 3, 3, 4])\nplt.show()"
+    },
+    "scatter": {
+        "description": "Used to draw a scatter plot to compare two variables.",
+        "example": "plt.scatter([1, 2, 3], [4, 5, 6])\nplt.show()"
+    },
+    "show": {
+        "description": "Used to display the plot after it's created.",
+        "example": "plt.show()"
+    },
+    "seaborn": {
+        "description": "<code>seaborn</code> is built on top of <code>matplotlib</code>.\nIt is used to create beautiful and advanced statistical visualizations easily.",
+        "functions": ["heatmap", "boxplot", "countplot", "pairplot"]
+    },
+    "heatmap": {
+        "description": "Used to draw a heatmap showing relationships between values in a table.",
+        "example": "import seaborn as sns\nimport numpy as np\ndata = np.random.rand(4,4)\nsns.heatmap(data)\nplt.show()"
+    },
+    "boxplot": {
+        "description": "Used to draw a box plot showing distribution and outliers.",
+        "example": "sns.boxplot(data=[7, 15, 13, 21, 23, 23, 29])\nplt.show()"
+    },
+    "countplot": {
+        "description": "Used to display the count of values in each category.",
+        "example": "sns.countplot(x=['A', 'B', 'A', 'C', 'B', 'A'])\nplt.show()"
+    },
+    "pairplot": {
+        "description": "Used to draw pairwise relationships between columns in a DataFrame.",
+        "example": "import seaborn as sns\ndf = sns.load_dataset('iris')\nsns.pairplot(df, hue='species')\nplt.show()"
     }
 }
