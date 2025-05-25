@@ -40,7 +40,7 @@ def read_file_lines(filename):
 def get_random_reply(filename):
     lines = read_file_lines(filename)
     return random.choice(lines)
-
+# دالة 
 def get_reply_by_intent(intent: str, lang: str = "en") -> str:
     filename = f"{intent}_{lang}.txt"
     path = os.path.join("bot-responses", filename)
@@ -76,6 +76,7 @@ def detect_user_language(user_text: str, user_context_lang: str = None, user_int
 def detect_intent(user_text: str) -> str:
     user_text = user_text.strip().lower()
 
+    status = ["كيف الحال", "اخبارك", "شو اخبارك", "عامل ايه", "كيف عامل", "how are you", "how are things", "what's up"]
     example_keywords = ["مثال", "كود", "example", "code"]
     greetings = ["سلام", "السلام", "مرحبا", "أهلا", "hi", "hello", "hey"]
     thanks = ["شكرا", "شكراً", "شكرًا", "ثانكس", "thanks", "thank you"]
@@ -94,6 +95,8 @@ def detect_intent(user_text: str) -> str:
         return "knowledge"
     elif any(word in user_text for word in bye):
         return "bye"
+    elif any(word in user_text for word in status):
+        return "status"
     else:
         return "unknown"
 
