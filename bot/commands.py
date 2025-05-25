@@ -11,8 +11,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.message is None:
         return
 
-    await update.message.reply_text("سعدتُ بوصولك! ماذا تحب أن أقدّم لك؟ 📚")
-    await update.message.reply_text("لعرض الاوامر المتاحة أكتب /help")
+    await set_language(update, context)
 
 # دالة لمعرفة الاوامر المتاحة
 async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -32,7 +31,7 @@ async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
 <code>/about</code> — من أنا؟  
 <code>/pass</code> — توليد كلمة مرور آمنة  
 <code>/set_lang</code> — تغيير اللغة: العربية / English
-<code>/data_analysis - تحليل البيانات
+<code>/data_analysis</code> - تحليل البيانات
 
 ✨ <i>يمكنك أيضًا سؤالي عن تحليل البيانات باستخدام بايثون!</i>
 '''
@@ -47,10 +46,11 @@ async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
 <code>/about</code> — Who am I?  
 <code>/pass</code> — Generate a strong password  
 <code>/set_lang</code> — Change language: English / العربية
-<code>/data_analysis - Data Analysis
+<code>/data_analysis</code> - Data Analysis
 
 ✨ <i>You can also ask me about data analysis using Python!</i>
 '''
+
     await update.message.reply_text(msg, parse_mode="HTML")
 
 # دالة لعرض الزمن الحالي
@@ -106,13 +106,13 @@ async def about(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if lang == "ar":
         msg = (
             "🤖 <b>أنا SmartyBot</b>، مساعدك الذكي لتحليل البيانات باستخدام بايثون!\n"
-            "💡 أستطيع شرح تحليل البيانات، تنفيذ تحليل بيانات، توليد تقارير، التحدث بلغتين.\n"
-            "✨ صُنع بإتقان بواسطة <b>محمد طارق</b>."
+            "💡 أستطيع شرح تحليل البيانات ، تنفيذ تحليل بيانات، توليد تقارير، التحدث بلغتين.\n"
+            "✨ صُنع بإتقان بواسطة <code><b>محمد طارق</b></code>."
         )
     else:
         msg = (
             "🤖 <b>I'm SmartyBot</b>, your smart assistant for data analysis using Python!\n"
-            "💡 I can explain Data Analysis, run data analysis, generate reports, and speak both languages.\n"
+            "💡 I can explain libraries, run data analysis, generate reports, and speak both languages.\n"
             "✨ Created with care by <b>Mohammed Tarig</b>."
         )
 
@@ -128,15 +128,15 @@ async def data_analysis(update: Update, context: ContextTypes.DEFAULT_TYPE):
         msg = (
             "🤖 <b>تحليل البيانات</b>، يتم تحليل البيانات باستخدام بايثون\n"
             "🧰 <b>الادوات المستخدم:</b>\n"
-            "🐍 <code>Python => لغة البرمجة" \
-            "🔢 <code>Numpy => مكتبة تساعد في ترتيب المصفوفات"
-            "🧼 <code>Pandas => مكتبة تساعد في تنظيف و تحليل البيانات"
-            "📊 <code>Matplotlib => مكتبة للرسم البياني"
-            "📈 <code>Seaborn => مكتبة للرسم البياني الحديث"
+            "🐍 <code>Python</code> => لغة البرمجة\n" 
+            "🔢 <code>Numpy</code> => مكتبة تساعد في ترتيب المصفوفات\n"
+            "🧼 <code>Pandas</code> => مكتبة تساعد في تنظيف و تحليل البيانات\n"
+            "📊 <code>Matplotlib</code> => مكتبة للرسم البياني\n"
+            "📈 <code>Seaborn</code> => مكتبة للرسم البياني الحديث\n"
 
-            "📤 <b>يمكنك رفع الملف الان مباشرة لتحليله</b>"
-            "ℹ️ <i>ملحوظة: يتم تحليل الملفات الاتية فقط:</i>"
-            "📁 <code>CSV | EXCEL | JSON"
+            "📤 <b>يمكنك رفع الملف الان مباشرة لتحليله</b>\n"
+            "ℹ️ <i>ملحوظة: يتم تحليل الملفات الاتية فقط:</i>\n"
+            "📁 <code>CSV | EXCEL | JSON</code>"
         )
     else:
         msg = (
