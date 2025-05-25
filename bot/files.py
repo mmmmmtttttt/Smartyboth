@@ -23,6 +23,18 @@ async def handle_file(update: Update, context: ContextTypes.DEFAULT_TYPE):
         file_obj = await file.get_file()
         await file_obj.download_to_drive(file_path)
 
+        ALLOWED_EXTENSIONS = [".csv", ".xlsx", ".xls", ".json"]
+
+        file_ext = os.path.splitext(file_name)[1].lower()
+        if file_ext not in ALLOWED_EXTENSIONS:
+            msg = (
+                "❌ لا يمكن تحليل هذا الملف. المدعومة هي: CSV, Excel, JSON"
+                if lang == "ar"
+                else "❌ Unsupported file type. Supported: CSV, Excel, JSON"
+            )
+            await update.message.reply_text(msg)
+            return
+        
         await update.message.reply_text("🔍 جاري تحليل الملف...")
         results = clean_and_analyze_file(file_path)
         if 'shape' not in results:
