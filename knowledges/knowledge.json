@@ -1,0 +1,47 @@
+{
+    "تحليل البيانات": {
+        "شرح": "تحليل البيانات هو عملية استخراج معلومات ومعرفة من البيانات الخام.\nالهدف منها هو اتخاذ قرارات مبنية على البيانات.",
+        "المكتبات": ["pandas", "numpy", "matplotlib", "seaborn"]
+    },
+    "pandas": {
+        "شرح": "مكتبة <code>pandas</code> تُستخدم لتحليل البيانات في بايثون.\nتسمح لك بالعمل على الجداول والبيانات في شكل <code>DataFrame</code> بطريقة سهلة وفعالة.",
+        "الدوال": ["read", "head", "tail", "describe", "info", "value_counts"],
+        "مثال": "import pandas as pd\ndf = pd.read_csv('data.csv')\ndf.head()"
+    },
+    "numpy": {
+        "شرح": "مكتبة <code>numpy</code> تُستخدم للعمليات العددية والمصفوفات.\nوهي أساس قوي للمعالجة الرقمية في بايثون.",
+        "الدوال": ["array", "mean", "median", "std", "reshape"]
+    },
+    "matplotlib": {
+        "شرح": "مكتبة <code>matplotlib</code> تُستخدم لرسم المخططات البيانية.\nتتيح لك إنشاء رسوم بيانية من نوع أعمدة، خطوط، نقاط وغيرها.",
+        "الدوال": ["plot", "bar", "hist", "scatter", "show"]
+    },
+    "seaborn": {
+        "شرح": "مكتبة <code>seaborn</code> مبنية على <code>matplotlib</code>.\nتُستخدم لإنشاء رسوم بيانية إحصائية جميلة ومتقدمة بسهولة.",
+        "الدوال": ["heatmap", "boxplot", "countplot", "pairplot"]
+    },
+    "read": {
+        "شرح": "تُستخدم دوال القراءة في <code>pandas</code> لتحميل البيانات من مصادر مختلفة.\nبعد التحميل، يتم تخزينها في هيكل يُسمى <code>DataFrame</code> ليتم تحليلها.",
+        "مثال": "import pandas as pd\n\n# CSV\ndf1 = pd.read_csv('data.csv')\n\n# Excel\ndf2 = pd.read_excel('data.xlsx')\n\n# JSON\ndf3 = pd.read_json('data.json')\n\n# Google Sheets\nsheet_url = 'https://docs.google.com/spreadsheets/d/1abc123xyz/export?format=csv'\ndf4 = pd.read_csv(sheet_url)\n\n# من الإنترنت\nurl = 'https://example.com/data.csv'\ndf5 = pd.read_csv(url)"
+    },
+    "head": {
+        "شرح": "تعرض أول 5 صفوف من البيانات بشكل افتراضي.\nتُستخدم لمعاينة بداية البيانات.",
+        "مثال": "df.head()"
+    },
+    "tail": {
+        "شرح": "تعرض آخر 5 صفوف من البيانات.\nمفيدة لمراجعة نهاية البيانات.",
+        "مثال": "df.tail()"
+    },
+    "describe": {
+        "شرح": "تُستخدم لعرض ملخص إحصائي للأعمدة الرقمية.\nتشمل المتوسط، الانحراف المعياري، القيم القصوى والدنيا.",
+        "مثال": "df.describe()"
+    },
+    "info": {
+        "شرح": "تعرض معلومات عامة عن <code>DataFrame</code>.\nتشمل أسماء الأعمدة، أنواع البيانات، وعدد القيم غير الفارغة.",
+        "مثال": "df.info()"
+    },
+    "value_counts": {
+        "شرح": "تُستخدم لحساب عدد تكرار كل قيمة في عمود محدد.\nمثالية لتحليل التوزيع الفئوي.",
+        "مثال": "df['col'].value_counts()"
+    }
+}

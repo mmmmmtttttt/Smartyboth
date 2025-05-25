@@ -1,0 +1,7 @@
+🤖 <b>I'm SmartyBot</b>, your smart assistant for data analysis using Python!
+
+💡 I can explain libraries like <code>pandas</code>, <code>numpy</code>, <code>matplotlib</code> in a simple way.
+📊 I can analyze your data files and generate PDF reports with visual charts.
+🧠 I support both Arabic and English and understand your intent from questions.
+
+✨ <i>If you're learning or working in data analysis – I'm here to help.</i>

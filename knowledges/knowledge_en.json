@@ -1,0 +1,49 @@
+{
+    "data analysis": {
+        "description": "Data analysis is the process of extracting information and knowledge from raw data.\nThe goal is to make data-driven decisions.",
+        "libraries": ["pandas", "numpy", "matplotlib", "seaborn"]
+    },
+    "pandas": {
+        "description": "<code>pandas</code> is a Python library used for data analysis.\nIt allows you to work with tables and data in <code>DataFrame</code> format efficiently.",
+        "functions": ["read", "head", "tail", "describe", "info", "value_counts"],
+        "example": "import pandas as pd\ndf = pd.read_csv('data.csv')\ndf.head()"
+    },
+    "numpy": {
+        "description": "<code>numpy</code> is a library for numerical operations and arrays.\nIt is a core part of digital data processing in Python.",
+        "functions": ["array", "mean", "median", "std", "reshape"],
+        "example": "import numpy as np\narr = np.array([1, 2, 3])\nprint(np.mean(arr))"
+    },
+    "matplotlib": {
+        "description": "<code>matplotlib</code> is a library used to create data visualizations.\nIt helps you draw charts such as bars, lines, and points.",
+        "functions": ["plot", "bar", "hist", "scatter", "show"]
+    },
+    "seaborn": {
+        "description": "<code>seaborn</code> is built on top of <code>matplotlib</code>.\nIt is used to create beautiful and advanced statistical plots easily.",
+        "functions": ["heatmap", "boxplot", "countplot", "pairplot"],
+        "example": "import seaborn as sns\nimport pandas as pd\ndf = sns.load_dataset('iris')\nsns.pairplot(df)"
+    },
+    "read": {
+        "description": "Read functions in <code>pandas</code> are used to load data from various sources.\nAfter loading, the data is stored in a structure called <code>DataFrame</code> for analysis.",
+        "example": "import pandas as pd\n\n# CSV\ndf1 = pd.read_csv('data.csv')\n\n# Excel\ndf2 = pd.read_excel('data.xlsx')\n\n# JSON\ndf3 = pd.read_json('data.json')\n\n# Google Sheets\nsheet_url = 'https://docs.google.com/spreadsheets/d/1abc123xyz/export?format=csv'\ndf4 = pd.read_csv(sheet_url)\n\n# From URL\nurl = 'https://example.com/data.csv'\ndf5 = pd.read_csv(url)"
+    },
+    "head": {
+        "description": "Displays the first 5 rows of the dataset by default.\nUseful for inspecting the beginning of your data.",
+        "example": "df.head()"
+    },
+    "tail": {
+        "description": "Displays the last 5 rows of the dataset.\nUseful for reviewing the end of the data.",
+        "example": "df.tail()"
+    },
+    "describe": {
+        "description": "Displays a statistical summary of numeric columns.\nIncludes mean, standard deviation, max, and min values.",
+        "example": "df.describe()"
+    },
+    "info": {
+        "description": "Shows general information about the <code>DataFrame</code>.\nIncludes column names, data types, and non-null counts.",
+        "example": "df.info()"
+    },
+    "value_counts": {
+        "description": "Counts the occurrences of each unique value in a specific column.\nUseful for analyzing categorical data distribution.",
+        "example": "df['col'].value_counts()"
+    }
+}
