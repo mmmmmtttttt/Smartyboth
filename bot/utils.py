@@ -91,12 +91,12 @@ def detect_intent(user_text: str) -> str:
         return "who"
     elif any(word in user_text for word in example_keywords):
         return "example"
-    elif len(user_text.split()) <= 3:
-        return "knowledge"
     elif any(word in user_text for word in bye):
         return "bye"
     elif any(word in user_text for word in status):
         return "status"
+    elif len(user_text.split()) <= 3:
+        return "knowledge"
     else:
         return "unknown"
 
