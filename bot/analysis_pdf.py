@@ -1,5 +1,10 @@
+# ✅ [3] analysis_pdf.py - النسخة الشاملة لتقرير PDF برسوم بيانية
+
 from reportlab.lib.pagesizes import A4
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, Image, PageBreak
+from reportlab.platypus import (
+    SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer,
+    Image, PageBreak
+)
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.pdfbase import pdfmetrics
@@ -19,18 +24,15 @@ def generate_analysis_pdf_reportlab_en(results, output_path="uploaded/analysis_r
     styles.add(ParagraphStyle(name='BoldDejaVu', fontName='DejaVu', fontSize=14, spaceAfter=10))
 
     elements = []
-
-    # Title
     elements.append(Paragraph("Data Analysis Report", styles['BoldDejaVu']))
     elements.append(Spacer(1, 12))
 
-    # Summary
     summary = (
-        "- The data file was successfully loaded.<br/>"
-        "- Empty rows and columns were completely removed.<br/>"
-        "- Missing values were filled with 0 or 'undefined' based on column type.<br/>"
-        "- Statistical analysis was performed on numeric columns only.<br/>"
-        "- A bar chart was generated for the most frequent categorical column.<br/>"
+        f"- File Shape: {results['shape'][0]} rows × {results['shape'][1]} columns<br/>"
+        f"- Numeric Columns: {len(results['numeric_cols'])}<br/>"
+        f"- Text Columns: {len(results['text_cols'])}<br/>"
+        f"- Date Columns: {len(results['date_cols'])}<br/>"
+        f"- Cleaning applied: removed empty/constant/duplicate rows/columns, filled nulls.<br/>"
     )
     elements.append(Paragraph(summary, styles['NormalDejaVu']))
     elements.append(Spacer(1, 12))
@@ -52,29 +54,42 @@ def generate_analysis_pdf_reportlab_en(results, output_path="uploaded/analysis_r
         elements.append(table)
         elements.append(Spacer(1, 12))
 
-    # Nulls before
-    nulls_before = results['nulls_before'].reset_index().values.tolist()
-    nulls_before.insert(0, ["Column", "Missing Before"])
-    build_table(nulls_before, "Missing Values Before Cleaning")
-
-    # Nulls after
-    nulls_after = results['nulls_after'].reset_index().values.tolist()
-    nulls_after.insert(0, ["Column", "Missing After"])
-    build_table(nulls_after, "Missing Values After Cleaning")
-
-    # Stats table (transposed for better layout)
     stats = results['stats']
     transposed_stats = stats.transpose()
     transposed_stats.insert(0, 'Metric', transposed_stats.index)
     stats_data = [transposed_stats.columns.tolist()] + transposed_stats.values.tolist()
     build_table(stats_data, "Statistical Summary (Numeric Columns)")
 
-    # Chart
     if results.get('chart_path'):
         elements.append(PageBreak())
-        elements.append(Paragraph("Most Frequent Category Chart", styles['BoldDejaVu']))
+        elements.append(Paragraph("Top Category Frequency", styles['BoldDejaVu']))
         elements.append(Spacer(1, 12))
-        elements.append(Image(results['chart_path'], width=500, height=300))
+        elements.append(Image(results['chart_path'], width=480, height=300))
+
+    if results.get('corr_path'):
+        elements.append(PageBreak())
+        elements.append(Paragraph("Correlation Matrix (Numeric Columns)", styles['BoldDejaVu']))
+        elements.append(Spacer(1, 12))
+        elements.append(Image(results['corr_path'], width=500, height=350))
+
+    # ✅ إضافة التنبؤ (إن وُجد)
+    if results.get('prediction_result'):
+        elements.append(PageBreak())
+        elements.append(Paragraph("Prediction Summary", styles['BoldDejaVu']))
+        elements.append(Spacer(1, 12))
+        pred = results['prediction_result']
+        text = (
+            f"Target Column: <b>{pred['target']}</b><br/>"
+            f"R² Score: <b>{pred['r2_score']}</b><br/><br/>"
+            "Sample Predictions (Actual → Predicted):<br/>"
+        )
+        for actual, pred_val in pred['sample_prediction']:
+            text += f"• {round(actual,2)} → {round(pred_val,2)}<br/>"
+        elements.append(Paragraph(text, styles['NormalDejaVu']))
+        elements.append(Spacer(1, 12))
+
+    if results.get('prediction_chart_path'):
+        elements.append(Image(results['prediction_chart_path'], width=480, height=300))
 
     doc.build(elements)
     return output_path
