@@ -90,6 +90,10 @@ def clean_and_analyze_file(file_path, output_csv="cleaned_initial_dataset.csv"):
         plt.savefig(chart_path) # type: ignore
         plt.close() # type: ignore
 
+    font_path = "fonts/DejaVuSans.ttf"
+    font_prop = font_manager.FontProperties(fname=font_path)
+    rc('font', family=font_prop.get_name())
+    
     corr_path = None
     if len(numeric_cols) > 1:
         corr = df[numeric_cols].corr().round(2)
@@ -138,6 +142,10 @@ def clean_and_analyze_file(file_path, output_csv="cleaned_initial_dataset.csv"):
                     "sample_prediction": list(zip(y_test.head(5).values, y_pred[:5])),
                 }
 
+                font_path = "fonts/DejaVuSans.ttf"
+                font_prop = font_manager.FontProperties(fname=font_path)
+                rc('font', family=font_prop.get_name())
+                
                 # رسم بياني للمقارنة
                 import matplotlib.pyplot as plt
                 plt.figure(figsize=(8, 4))
