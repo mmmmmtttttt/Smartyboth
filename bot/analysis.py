@@ -39,14 +39,14 @@ def clean_and_analyze_file(file_path, lang="ar", output_csv="cleaned_initial_dat
     date_cols = [col for col in df.columns if is_datetime64_any_dtype(df[col])]
 
     if lang == "ar":
-    summary_text = (
-        f"تم تحميل الملف بنجاح\n"
-        f"عدد الصفوف: {df.shape[0]}\n"
-        f"عدد الأعمدة: {df.shape[1]}\n"
-        f"الأعمدة الرقمية: {len(numeric_cols)}\n"
-        f"الأعمدة النصية: {len(text_cols)}\n"
-        f"الأعمدة الزمنية: {len(date_cols)}"
-    )
+        summary_text = (
+            f"تم تحميل الملف بنجاح\n"
+            f"عدد الصفوف: {df.shape[0]}\n"
+            f"عدد الأعمدة: {df.shape[1]}\n"
+            f"الأعمدة الرقمية: {len(numeric_cols)}\n"
+            f"الأعمدة النصية: {len(text_cols)}\n"
+            f"الأعمدة الزمنية: {len(date_cols)}"
+        )
     else:
         summary_text = (
             f"✅ File loaded successfully\n"
@@ -56,6 +56,7 @@ def clean_and_analyze_file(file_path, lang="ar", output_csv="cleaned_initial_dat
             f"Text columns: {len(text_cols)}\n"
             f"Date columns: {len(date_cols)}"
         )
+
 
     df.dropna(axis=0, how='all', inplace=True)
     df.dropna(axis=1, how='all', inplace=True)
@@ -91,7 +92,7 @@ def clean_and_analyze_file(file_path, lang="ar", output_csv="cleaned_initial_dat
     font_path = "fonts/DejaVuSans.ttf"
     font_prop = font_manager.FontProperties(fname=font_path)
     rc('font', family=font_prop.get_name())
-    
+
     chart_path = None
     if most_common_col:
         plt.figure(figsize=(10, 5)) # type: ignore
@@ -106,7 +107,7 @@ def clean_and_analyze_file(file_path, lang="ar", output_csv="cleaned_initial_dat
     font_path = "fonts/DejaVuSans.ttf"
     font_prop = font_manager.FontProperties(fname=font_path)
     rc('font', family=font_prop.get_name())
-    
+
     corr_path = None
     if len(numeric_cols) > 1:
         corr = df[numeric_cols].corr().round(2)
