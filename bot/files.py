@@ -42,7 +42,7 @@ async def handle_file(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         msg = "🔍 جاري قراءة الملف وتحليله..." if lang == "ar" else "🔍 Reading and analyzing the file..."
         await update.message.reply_text(msg)
-        results = clean_and_analyze_file(file_path)
+        results = clean_and_analyze_file(file_path, lang=lang)
 
         if 'shape' not in results:
             msg = "❌ التحليل لم يكتمل. المحتوى:" if lang == "ar" else "❌ Analysis failed. Details:"
