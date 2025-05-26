@@ -12,18 +12,20 @@ async def handle_file(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.message is None:
         return
 
-    lang = context.user_data.get("lang", "ar") # type: ignore
+    lang = context.user_data.get("lang", "ar")  # type: ignore
 
     try:
         if update.message.document is None:
-            await update.message.reply_text("⚠️ لم يتم إرسال ملف.")
+            msg = "⚠️ لم يتم إرسال ملف." if lang == "ar" else "⚠️ No file was sent."
+            await update.message.reply_text(msg)
             return
 
         file = update.message.document
         file_name = file.file_name or "uploaded_file.csv"
         file_path = os.path.join(tempfile.gettempdir(), file_name)
 
-        await update.message.reply_text(f"📥 تم استلام الملف: {file_name}")
+        msg = f"📥 تم استلام الملف: {file_name}" if lang == "ar" else f"📥 File received: {file_name}"
+        await update.message.reply_text(msg)
         file_obj = await file.get_file()
         await file_obj.download_to_drive(file_path)
 
@@ -38,36 +40,60 @@ async def handle_file(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await update.message.reply_text(msg)
             return
 
-        await update.message.reply_text("🔍 جاري قراءة الملف وتحليله...")
+        msg = "🔍 جاري قراءة الملف وتحليله..." if lang == "ar" else "🔍 Reading and analyzing the file..."
+        await update.message.reply_text(msg)
         results = clean_and_analyze_file(file_path)
 
         if 'shape' not in results:
-            await update.message.reply_text(f"❌ التحليل لم يكتمل. المحتوى:\n{results}")
+            msg = "❌ التحليل لم يكتمل. المحتوى:" if lang == "ar" else "❌ Analysis failed. Details:"
+            await update.message.reply_text(f"{msg}\n{results}")
             return
 
-        await update.message.reply_text("📄 ملخص الملف:")
+        msg = "📄 ملخص الملف:" if lang == "ar" else "📄 File summary:"
+        await update.message.reply_text(msg)
         await update.message.reply_text(results['summary_text'])
 
-        await update.message.reply_text("🧹 جارٍ تنظيف البيانات...")
-        await update.message.reply_text("✅ تم حذف الأعمدة والصفوف الفارغة والمكررة.")
-        await update.message.reply_text("✅ تم تعويض القيم المفقودة في الأعمدة الرقمية بـ 0، والنصية بـ 'undefined'.")
+        msg = "🧹 جارٍ تنظيف البيانات..." if lang == "ar" else "🧹 Cleaning the data..."
+        await update.message.reply_text(msg)
 
-        await update.message.reply_text("📊 بدء التحليل الإحصائي والرسم البياني...")
+        msg = (
+            "✅ تم حذف الأعمدة والصفوف الفارغة والمكررة."
+            if lang == "ar" else
+            "✅ Removed empty and duplicate rows/columns."
+        )
+        await update.message.reply_text(msg)
+
+        msg = (
+            "✅ تم تعويض القيم المفقودة في الأعمدة الرقمية بـ 0، والنصية بـ 'undefined'."
+            if lang == "ar" else
+            "✅ Filled missing values: numeric with 0, text with 'undefined'."
+        )
+        await update.message.reply_text(msg)
+
+        msg = "📊 بدء التحليل الإحصائي والرسم البياني..." if lang == "ar" else "📊 Starting statistical analysis and visualization..."
+        await update.message.reply_text(msg)
 
         if results.get('prediction_result'):
             pred = results['prediction_result']
-            msg = f"🤖 تم تنفيذ التنبؤ على العمود: <b>{pred['target']}</b>" # type: ignore
-            msg += f"📈 نسبة الدقة (R²): <b>{pred['r2_score']}</b>" # type: ignore
-            msg += "🔍 أمثلة (فعلي → متوقع):\n"
-            for actual, pred_val in pred['sample_prediction']: # type: ignore
-                msg += f"• {round(actual,2)} → {round(pred_val,2)}" # type: ignore
+            if lang == "ar":
+                msg = f"🤖 تم تنفيذ التنبؤ على العمود: <b>{pred['target']}</b>"
+                msg += f"\n📈 نسبة الدقة (R²): <b>{pred['r2_score']}</b>"
+                msg += "\n🔍 أمثلة (فعلي → متوقع):\n"
+            else:
+                msg = f"🤖 Prediction executed on column: <b>{pred['target']}</b>"
+                msg += f"\n📈 Accuracy (R²): <b>{pred['r2_score']}</b>"
+                msg += "\n🔍 Samples (Actual → Predicted):\n"
+
+            for actual, pred_val in pred['sample_prediction']:  # type: ignore
+                msg += f"• {round(actual, 2)} → {round(pred_val, 2)}\n"
             await update.message.reply_text(msg, parse_mode="HTML")
 
             if results.get('prediction_chart_path'):
                 with open(results['prediction_chart_path'], 'rb') as chart:
                     await update.message.reply_photo(chart)
-                    
-        await update.message.reply_text("📄 جارٍ إرسال تقرير التحليل الكامل...")
+
+        msg = "📄 جارٍ إرسال تقرير التحليل الكامل..." if lang == "ar" else "📄 Sending the full analysis report..."
+        await update.message.reply_text(msg)
 
         pdf_path = generate_analysis_pdf_reportlab_en(results)
         await update.message.reply_document(document=open(pdf_path, 'rb'), filename="analysis_report.pdf")
@@ -77,7 +103,8 @@ async def handle_file(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         if isinstance(results['stats'], pd.DataFrame):
             stats_text = results['stats'].head().to_string()
-            await update.message.reply_text("📈 بعض الإحصائيات الرقمية:")
+            msg = "📈 بعض الإحصائيات الرقمية:" if lang == "ar" else "📈 Some numeric statistics:"
+            await update.message.reply_text(msg)
             await update.message.reply_text(stats_text)
 
         if results.get('chart_path'):
@@ -86,7 +113,8 @@ async def handle_file(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if results.get('corr_path'):
             await update.message.reply_photo(photo=open(results['corr_path'], 'rb'))
 
-        await update.message.reply_text("✅ تم الانتهاء من التحليل. شكراً لاستخدامك البوت!")
+        msg = "✅ تم الانتهاء من التحليل. شكراً لاستخدامك البوت!" if lang == "ar" else "✅ Analysis complete. Thank you for using the bot!"
+        await update.message.reply_text(msg)
 
         message_text = (
             "✅ <b>تم تحليل الملف بنجاح!</b>\n\n"
@@ -98,6 +126,16 @@ async def handle_file(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "• 💼 <b>Upwork:</b> من الزر أدناه 👇\n"
             "• 🔗 <b>LinkedIn:</b> من الزر أدناه 👇\n\n"
             "✨ <i>جاهز لتحويل بياناتك إلى قرارات ذكية.</i>"
+        ) if lang == "ar" else (
+            "✅ <b>File analyzed successfully!</b>\n\n"
+            "<b>📊 Looking for more advanced analysis?</b>\n"
+            "Deeper insights, smarter AI predictions, and expert-level reporting.\n\n"
+            "<b>📨 Contact <u>Mohammed Tarig</u> via:</b>\n"
+            "• 📧 <b>Email:</b> <code>mohammedtarig820@gmail.com</code>\n"
+            "• 📞 <b>Phone:</b> <code>+966 558 971 433</code>\n"
+            "• 💼 <b>Upwork:</b> from the button below 👇\n"
+            "• 🔗 <b>LinkedIn:</b> from the button below 👇\n\n"
+            "✨ <i>Ready to turn your data into decisions.</i>"
         )
 
         keyboard = [
@@ -110,4 +148,5 @@ async def handle_file(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(message_text, parse_mode="HTML", reply_markup=reply_markup)
 
     except Exception as e:
-        await update.message.reply_text(f"❌ حدث خطأ أثناء تحليل الملف:\n{str(e)}")
+        msg = "❌ حدث خطأ أثناء تحليل الملف:" if lang == "ar" else "❌ An error occurred while analyzing the file:"
+        await update.message.reply_text(f"{msg}\n{str(e)}")
