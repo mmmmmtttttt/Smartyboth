@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from pandas.api.types import is_numeric_dtype, is_object_dtype, is_datetime64_any_dtype
 
-def clean_and_analyze_file(file_path, output_csv="cleaned_initial_dataset.csv"):
+def clean_and_analyze_file(file_path, lang="ar", output_csv="cleaned_initial_dataset.csv"):
     ext = os.path.splitext(file_path)[-1].lower()
     if ext == ".csv":
         encodings = ['utf-8', 'utf-16', 'windows-1256']
@@ -38,11 +38,24 @@ def clean_and_analyze_file(file_path, output_csv="cleaned_initial_dataset.csv"):
     text_cols = [col for col in df.columns if is_object_dtype(df[col])]
     date_cols = [col for col in df.columns if is_datetime64_any_dtype(df[col])]
 
+    if lang == "ar":
     summary_text = (
-        f"📊 تم تحميل الملف بنجاح\n"
-        f"عدد الصفوف: {df.shape[0]}\nعدد الأعمدة: {df.shape[1]}\n"
-        f"الأعمدة الرقمية: {len(numeric_cols)}\nالأعمدة النصية: {len(text_cols)}\nالأعمدة الزمنية: {len(date_cols)}"
+        f"تم تحميل الملف بنجاح\n"
+        f"عدد الصفوف: {df.shape[0]}\n"
+        f"عدد الأعمدة: {df.shape[1]}\n"
+        f"الأعمدة الرقمية: {len(numeric_cols)}\n"
+        f"الأعمدة النصية: {len(text_cols)}\n"
+        f"الأعمدة الزمنية: {len(date_cols)}"
     )
+    else:
+        summary_text = (
+            f"✅ File loaded successfully\n"
+            f"Rows: {df.shape[0]}\n"
+            f"Columns: {df.shape[1]}\n"
+            f"Numeric columns: {len(numeric_cols)}\n"
+            f"Text columns: {len(text_cols)}\n"
+            f"Date columns: {len(date_cols)}"
+        )
 
     df.dropna(axis=0, how='all', inplace=True)
     df.dropna(axis=1, how='all', inplace=True)
