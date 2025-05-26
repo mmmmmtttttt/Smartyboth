@@ -73,6 +73,12 @@ def clean_and_analyze_file(file_path, output_csv="cleaned_initial_dataset.csv"):
             most_common_col = col
 
     import matplotlib.pyplot as plt
+    from matplotlib import font_manager, rc
+
+    font_path = "fonts/DejaVuSans.ttf"
+    font_prop = font_manager.FontProperties(fname=font_path)
+    rc('font', family=font_prop.get_name())
+    
     chart_path = None
     if most_common_col:
         plt.figure(figsize=(10, 5)) # type: ignore
