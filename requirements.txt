@@ -9,3 +9,4 @@ tabulate
 xlrd
 openpyxl
 xlsxwriter
+scikit-learn
